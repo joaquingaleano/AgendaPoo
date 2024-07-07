@@ -4,6 +4,9 @@
  */
 package tabla01.igu;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -55,11 +58,13 @@ public class Principal extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnElimTodo = new javax.swing.JButton();
         txtModif = new javax.swing.JButton();
+        btnExportar = new javax.swing.JButton();
 
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setBackground(new java.awt.Color(102, 102, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nombre");
 
@@ -148,41 +153,45 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        btnExportar.setText("Exportar");
+        btnExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(20, 20, 20)
-                                .addComponent(txtNombre))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(21, 21, 21)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(75, 75, 75)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtColumna, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                            .addComponent(txtDato)
-                            .addComponent(txtFila)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addGap(20, 20, 20)
+                        .addComponent(txtNombre))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(21, 21, 21)
+                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(75, 75, 75)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtColumna, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                    .addComponent(txtDato)
+                    .addComponent(txtFila))
+                .addContainerGap(66, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(14, 14, 14)
                 .addComponent(btnInsertar)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
@@ -190,7 +199,13 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btnElimTodo)
                 .addGap(18, 18, 18)
                 .addComponent(txtModif)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExportar)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +233,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(btnInsertar)
                     .addComponent(btnEliminar)
                     .addComponent(btnElimTodo)
-                    .addComponent(txtModif))
+                    .addComponent(txtModif)
+                    .addComponent(btnExportar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -278,14 +294,47 @@ public class Principal extends javax.swing.JFrame {
         modelo.setValueAt(txtDato.getText(),fila, columna);
     }//GEN-LAST:event_txtModifActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        saveTableToTXT();
+    }//GEN-LAST:event_btnExportarActionPerformed
+    
+    private void saveTableToTXT() {
+        try {
+
+            String desktopPath = System.getProperty("user.home") + "/Desktop/";
+
+
+            FileWriter fileWriter = new FileWriter(desktopPath + "Agenda.txt");
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+
+
+            for (int i = 0; i < modelo.getColumnCount(); i++) {
+                writer.write(modelo.getColumnName(i) + "\t");
+            }
+            writer.newLine();
+
+
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                for (int j = 0; j < modelo.getColumnCount(); j++) {
+                    writer.write(modelo.getValueAt(i, j) + "\t");
+                }
+                writer.newLine();
+            }
+
+            writer.close();
+            JOptionPane.showMessageDialog(null, "El archivo se exporto a: Agenda.txt");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al guardar el archivo: " + e.getMessage());
+        }
+    }
+
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnElimTodo;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
